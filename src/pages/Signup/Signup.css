@@ -1,0 +1,128 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter';
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EAF6F6;
+  padding: 60px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  width: 90%;
+  gap: 50px; /* Creates spacing between form and image */
+}
+
+.signup-form {
+  flex: 1;
+  max-width: 400px;
+  text-align: center;  /* Center text and form elements */
+}
+
+.signup-form h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #1D7874;
+}
+
+.signup-form p {
+  margin: 20px 0 40px;
+  font-size: 2rem;
+  color: #333;
+}
+.signup-form p1 {
+  margin: 20px 0 40px;
+  font-size: 1rem;
+  color: #1D7874;
+}
+
+.signup-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signup-form input {
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #145A56;
+  color: white;
+  font-size: 1rem;
+  width: 100%; /* Full width input fields */
+}
+
+.signup-form input::placeholder {
+  color: #ddd;
+}
+
+.signup-form button {
+  padding: 15px 40px; /* Button width adjusted */
+  background-color: #7AC3B4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 200px; /* Button wider for aesthetics */
+  align-self: center; /* Center button horizontally */
+}
+
+.signup-form button:hover {
+  background-color: #5FA9A0;
+}
+
+.signup-image img {
+  max-width: 450px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.login-link {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.login-link a {
+  color: #1D7874;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .signup-image img {
+    max-width: 300px;
+  }
+
+  .signup-form {
+    max-width: 90%;
+  }
+
+  .signup-form button {
+    width: 100%;  /* Full-width button for smaller screens */
+  }
+}
