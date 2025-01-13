@@ -1,0 +1,49 @@
+.audiobooks-page {
+  padding: 20px;
+}
+
+.audiobooks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.audiobook-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.audiobook-card:hover {
+  transform: scale(1.05);
+}
+
+.audiobook-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.audiobook-card h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.audiobook-card p {
+  margin: 5px 0;
+}
+
+.audiobook-card button {
+  background-color: #0c574e;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.audiobook-card button:hover {
+  background-color: #0a4a41;
+}

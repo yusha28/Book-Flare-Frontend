@@ -1,0 +1,50 @@
+.audiobook-details {
+    padding: 20px;
+  }
+  
+  .details-header {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .details-header img {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .details-header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .details-header h3 {
+    color: gray;
+    margin-bottom: 10px;
+  }
+  
+  .details-header button {
+    background-color: #0c574e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .details-header button:hover {
+    background-color: #0a4a41;
+  }
+  
+  .chapters-list {
+    margin-top: 20px;
+  }
+  
+  .chapter-item {
+    margin-bottom: 20px;
+  }
+  
+  .chapter-item audio {
+    margin-top: 10px;
+  }
+  

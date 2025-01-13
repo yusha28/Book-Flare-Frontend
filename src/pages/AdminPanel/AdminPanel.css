@@ -1,0 +1,61 @@
+.admin-panel {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  .add-chapter-btn {
+    background-color: #3498db;
+  }
+  
+  .remove-chapter-btn {
+    background-color: #e74c3c;
+  }
+  
+  .submit-btn {
+    background-color: #2ecc71;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  

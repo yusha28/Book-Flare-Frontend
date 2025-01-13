@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../assets/images/logo.png';
 import { useAuth } from '../context/AuthContext';
@@ -8,6 +8,15 @@ import { BiMenu } from 'react-icons/bi';
 
 function Navbar() {
   const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/books?search=${searchTerm}`);
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -26,11 +35,21 @@ function Navbar() {
 
       {isAuthenticated ? (
         <div className="navbar-auth">
-          <div className="search-bar">
+          <form className="search-bar" onSubmit={handleSearch}>
             <BiMenu className="menu-icon" />
-            <input type="text" placeholder="Search" />
-          </div>
-          <FaShoppingCart className="cart-icon" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </form>
+
+          {/* Cart Icon Wrapped with Link */}
+          <Link to="/cart" className="cart-link">
+            <FaShoppingCart className="cart-icon" />
+          </Link>
+
           <FaUser className="user-icon" />
           <button className="logout" onClick={logout}>Logout</button>
         </div>

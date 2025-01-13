@@ -29,7 +29,12 @@ function AuthenticatedNavbar() {
           <BiMenu className="menu-icon" />
           <input type="text" placeholder="Search" />
         </div>
-        <FaShoppingCart className="cart-icon" />
+
+        {/* Wrap Cart Icon in Link to Navigate to Cart Page */}
+        <Link to="/cart" className="cart-link">
+          <FaShoppingCart className="cart-icon" />
+        </Link>
+
         <FaUser className="user-icon" />
         <button className="logout" onClick={logout}>Logout</button>
       </div>

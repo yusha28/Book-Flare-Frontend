@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #EDF7F6;  /* Set entire page background */
+  font-family: 'Inter', sans-serif;
+}
+
+.book-details-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+  background-color: #EDF7F6;
+  min-height: 100vh;  /* Ensure it covers the full viewport height */
+}
+
+.book-details {
+  display: flex;
+  background-color: #EDF7F6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.book-image-container {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.book-image-container img {
+  width: 280px;
+  height: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.book-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 40px;
+}
+
+.book-info h1 {
+  font-size: 2rem;
+  font-weight: 700;  /* Inter Bold */
+  color: #333;
+  margin: 0;
+}
+
+.book-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;  /* Inter Semi Bold */
+  color: #666;
+  margin: 5px 0;
+}
+
+.book-info p {
+  font-size: 1rem;
+  font-weight: 400;  /* Inter Regular */
+  line-height: 1.5;
+  color: #555;
+  margin: 0;
+}
+
+.book-info .price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f6247;
+  margin: 15px 0;
+}
+
+.book-info h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 20px 0 5px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.buy-btn, .cart-btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.buy-btn {
+  background-color: #0f6247;
+  color: white;
+}
+
+.cart-btn {
+  background-color: white;
+  color: #0f6247;
+  border: 1px solid #0f6247;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-btn svg {
+  width: 18px;
+  height: 18px;
+}
