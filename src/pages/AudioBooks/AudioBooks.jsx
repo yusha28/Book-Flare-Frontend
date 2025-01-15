@@ -1,41 +1,89 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './AudioBooks.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./AudioBooks.css";
+import Footer from "../../components/Footer";
 
-function Audiobooks() {
-  const [audioBooks, setAudioBooks] = useState([]);
+function AudioBooks() {
+  const [audiobooks, setAudiobooks] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const audiobooksPerPage = 4;
   const navigate = useNavigate();
 
+  // Fetch Audiobooks
   useEffect(() => {
     const fetchAudiobooks = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/audiobooks');
-        const data = await response.json();
-        setAudioBooks(data);
+        const response = await axios.get("http://localhost:5000/api/audiobooks");
+        setAudiobooks(response.data);
       } catch (error) {
-        console.error('Error fetching audiobooks:', error);
+        console.error("Failed to fetch audiobooks:", error);
       }
     };
-
     fetchAudiobooks();
   }, []);
+
+  // Pagination Logic
+  const indexOfLastAudiobook = currentPage * audiobooksPerPage;
+  const indexOfFirstAudiobook = indexOfLastAudiobook - audiobooksPerPage;
+  const currentAudiobooks = audiobooks.slice(
+    indexOfFirstAudiobook,
+    indexOfLastAudiobook
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleViewDetails = (id) => {
+    navigate(`/audiobooks/${id}`);
+  };
 
   return (
     <div className="audiobooks-page">
       <h1>All Audiobooks</h1>
-      <div className="audiobooks-grid">
-        {audioBooks.map((book) => (
-          <div key={book._id} className="audiobook-card">
-            <img src={book.image} alt={book.title} />
-            <h3>{book.title}</h3>
-            <p>By {book.author}</p>
-            <p>{book.price ? `${book.price} NPR` : 'Price Not Available'}</p>
-            <button onClick={() => navigate(`/audiobooks/${book._id}`)}>Details</button>
+      <p>Explore our vast collection of audiobooks.</p>
+
+      {/* Audiobook Cards */}
+      <div className="audiobook-grid">
+        {currentAudiobooks.map((audiobook) => (
+          <div key={audiobook._id} className="audiobook-card">
+            <img
+              src={audiobook.image}
+              alt={audiobook.title}
+              onError={(e) => (e.target.src = "/images/placeholder.png")}
+            />
+            <h3>{audiobook.title}</h3>
+            <p className="author">By {audiobook.author}</p>
+            <p className="price">{audiobook.price} NPR</p>
+            <button
+              className="view-details"
+              onClick={() => handleViewDetails(audiobook._id)}
+            >
+              View Details
+            </button>
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from(
+          { length: Math.ceil(audiobooks.length / audiobooksPerPage) },
+          (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => paginate(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          )
+        )}
+      </div>
+
+      {/* Footer Section */}
+      <Footer />
     </div>
   );
 }
 
-export default Audiobooks;
+export default AudioBooks;

@@ -1,49 +1,121 @@
+/* General Page Styling */
 .audiobooks-page {
   padding: 20px;
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
 }
 
-.audiobooks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.audiobook-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
+.audiobooks-page h1 {
   text-align: center;
-  transition: transform 0.3s ease;
+  margin-bottom: 15px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.audiobooks-page p {
+  text-align: center;
+  font-size: 18px;
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+/* Grid Styling */
+.audiobook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+/* Card Styling */
+.audiobook-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dfe3e9;
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .audiobook-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Image Styling */
 .audiobook-card img {
   width: 100%;
-  height: auto;
-  border-radius: 10px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
 
+/* Info Styling */
 .audiobook-card h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
+  font-size: 20px;
+  color: #333333;
+  margin-bottom: 8px;
 }
 
-.audiobook-card p {
-  margin: 5px 0;
+.audiobook-card .author {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 8px;
 }
 
-.audiobook-card button {
-  background-color: #0c574e;
+.audiobook-card .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+/* Button Styling */
+.audiobook-card .view-details {
+  padding: 10px 20px;
+  background-color: #3e7dcb;
   color: white;
-  padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-.audiobook-card button:hover {
-  background-color: #0a4a41;
+.audiobook-card .view-details:hover {
+  background-color: #2f66aa;
+}
+
+/* Pagination */
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e5e7eb;
+  color: #333333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #d1d5db;
+}
+
+.pagination button.active {
+  background-color: #3e7dcb;
+  color: white;
 }

@@ -37,7 +37,7 @@ function MainApp() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/audiobooks" element={<AudioBooks />} />  {/* AudioBooks Page */}
-        <Route path="/audiobooks/:title" element={<AudioBookDetails />} /> {/* AudioBook Details Page */}
+        <Route path="/audiobooks/:id" element={<AudioBookDetails />} /> {/* AudioBook Details Page */}
       </Routes>
     </div>
   );
