@@ -1,121 +1,90 @@
-/* General Page Styling */
-.audiobooks-page {
-  padding: 20px;
-  font-family: "Roboto", Arial, sans-serif;
-  background-color: #f5f7fa;
-  min-height: 100vh;
-}
-
-.audiobooks-page h1 {
+.audio-books-page {
   text-align: center;
-  margin-bottom: 15px;
-  font-size: 32px;
-  font-weight: 600;
+  margin: 40px 0;
+  background-color: #EAF6F6;
 }
 
-.audiobooks-page p {
-  text-align: center;
-  font-size: 18px;
-  color: #6b7280;
-  margin-bottom: 30px;
+.audio-books-page h1 {
+  font-size: 2.8rem;
+  color: #1D7874;
 }
 
-/* Grid Styling */
-.audiobook-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 0 20px;
+.audio-books-page p {
+  color: #555;
+  margin-bottom: 40px;
 }
 
-/* Card Styling */
-.audiobook-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid #dfe3e9;
-  overflow: hidden;
-  text-align: center;
-  padding: 20px;
+/* Audiobook Grid */
+.audio-books-grid {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Audiobook Card */
+.audio-book-card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 280px;
 }
 
-.audiobook-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+.audio-book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Image Styling */
-.audiobook-card img {
+.audio-book-card img {
   width: 100%;
-  height: 200px;
+  border-radius: 10px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 8px;
+}
+
+.audio-book-card h3 {
+  margin: 20px 0 10px;
+  font-size: 1.4rem;
+}
+
+.author {
+  color: #888;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.price {
+  font-size: 1.1rem;
+  color: #1D7874;
   margin-bottom: 15px;
 }
 
-/* Info Styling */
-.audiobook-card h3 {
-  font-size: 20px;
-  color: #333333;
-  margin-bottom: 8px;
-}
-
-.audiobook-card .author {
-  font-size: 16px;
-  color: #6b7280;
-  margin-bottom: 8px;
-}
-
-.audiobook-card .price {
-  font-size: 18px;
-  font-weight: bold;
-  color: #1f2937;
-  margin-bottom: 12px;
-}
-
-/* Button Styling */
-.audiobook-card .view-details {
-  padding: 10px 20px;
-  background-color: #3e7dcb;
+/* View Details Button */
+.view-details {
+  margin-top: 15px;
+  padding: 12px 24px;
+  background-color: #1D7874;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-
-.audiobook-card .view-details:hover {
-  background-color: #2f66aa;
-}
-
-/* Pagination */
-.pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.pagination button {
-  margin: 0 5px;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 4px;
-  background-color: #e5e7eb;
-  color: #333333;
-  font-size: 16px;
-  cursor: pointer;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
-.pagination button:hover {
-  background-color: #d1d5db;
+.view-details:hover {
+  background-color: #145A56;
 }
 
-.pagination button.active {
-  background-color: #3e7dcb;
-  color: white;
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .audio-book-card {
+    max-width: 100%;
+  }
+
+  .audio-book-card img {
+    height: 200px;
+  }
 }
