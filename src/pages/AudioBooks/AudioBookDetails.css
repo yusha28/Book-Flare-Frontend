@@ -1,115 +1,118 @@
 .audiobook-details-page {
-  font-family: "Inter", sans-serif;
-  padding: 20px;
-  background-color: #eaf6f6;
+  font-family: 'Inter', sans-serif;
+  background-color: #EAF6F6;
+  padding: 30px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.details-container {
+  width: 90%; /* Stretch the container to cover most of the page */
+  max-width: 1200px; /* Limit max width for larger screens */
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .details-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 30px;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+}
+
+.details-image {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-image img {
+  width: 250px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.headphone-icon {
+  margin-top: 15px;
+  font-size: 2rem;
+  color: #1D7874;
 }
 
 .details-info {
-  max-width: 60%;
-  text-align: left;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .details-info h1 {
   font-size: 2.5rem;
-  color: #1d7874;
+  font-weight: bold;
+  color: #1D7874;
   margin-bottom: 10px;
 }
 
-.details-info h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.details-info .author, .details-info .narrator {
+.details-info p {
   font-size: 1rem;
   color: #666;
   margin-bottom: 10px;
 }
 
-.details-info span {
-  color: #1d7874;
-  font-weight: 600;
+.details-info .author {
+  font-style: italic;
+  color: #666;
 }
 
 .details-info .rating {
-  font-size: 1.2rem;
-  color: #ffc107;
-  margin-bottom: 20px;
+  margin: 15px 0;
+  font-size: 1rem;
+  color: #FFA500;
+  display: flex;
+  align-items: center;
 }
 
-.listen-button {
-  background-color: #1d7874;
+.details-info .rating span {
+  margin-left: 5px;
+}
+
+.details-info .listen-button {
+  background-color: #1D7874;
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
+  padding: 12px 20px;
   cursor: pointer;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
+  align-self: start;
 }
 
-.listen-button:hover {
-  background-color: #145a56;
-}
-
-.details-image img {
-  max-width: 300px;
-  border-radius: 10px;
+.details-info .listen-button:hover {
+  background-color: #145A56;
 }
 
 .description {
-  margin-top: 40px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
 }
 
 .description h2 {
+  color: #1D7874;
   font-size: 1.8rem;
-  color: #1d7874;
   margin-bottom: 10px;
 }
 
 .description p {
-  font-size: 1rem;
-  color: #333;
+  color: #555;
   line-height: 1.6;
-}
-
-.chapters {
-  margin-top: 40px;
-}
-
-.chapters h2 {
-  font-size: 1.8rem;
-  color: #1d7874;
-  margin-bottom: 20px;
-}
-
-.chapter {
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.chapter h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-audio {
-  width: 100%;
 }

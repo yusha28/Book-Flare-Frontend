@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaHeadphones } from "react-icons/fa";
 import "./AudioBookDetails.css";
 
 function AudioBookDetails() {
@@ -36,44 +37,36 @@ function AudioBookDetails() {
 
   return (
     <div className="audiobook-details-page">
-      <div className="details-header">
-        <div className="details-info">
-          <h1>{audiobook.title}</h1>
-          <h2>{audiobook.subtitle || ""}</h2>
-          <p className="author">By <span>{audiobook.author}</span></p>
-          <p className="narrator">
-            Narrated by <span>{audiobook.narrator || "N/A"}</span>
-          </p>
-          <div className="rating">⭐ {audiobook.rating || "N/A"}</div>
-          <button className="listen-button" onClick={() => alert("Please buy the audiobook to listen!")}>
-            Listen
-          </button>
-        </div>
-        <div className="details-image">
-          <img
-            src={`http://localhost:5000${audiobook.image}`}
-            alt={audiobook.title}
-            onError={(e) => (e.target.src = "/images/placeholder.jpg")}
-          />
-        </div>
-      </div>
-
-      <div className="description">
-        <h2>Description</h2>
-        <p>{audiobook.description}</p>
-      </div>
-
-      <div className="chapters">
-        <h2>Chapters</h2>
-        {audiobook.chapters.map((chapter, index) => (
-          <div key={index} className="chapter">
-            <h3>{chapter.title}</h3>
-            <audio controls>
-              <source src={`http://localhost:5000${chapter.audioSrc}`} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
+      <div className="details-container">
+        <div className="details-header">
+          <div className="details-image">
+            <img
+              src={audiobook.image}
+              alt={audiobook.title}
+              onError={(e) => (e.target.src = "/images/placeholder.jpg")}
+            />
+            <div className="headphone-icon">
+              <FaHeadphones />
+            </div>
           </div>
-        ))}
+          <div className="details-info">
+            <h1>{audiobook.title}</h1>
+            <p className="author">By {audiobook.author}</p>
+            <p className="narrator">Narrated by {audiobook.narrator || "N/A"}</p>
+            <div className="rating">⭐ {audiobook.rating || "N/A"}</div>
+            <p>Chapters: {audiobook.chapters.length}</p>
+            <button
+              className="listen-button"
+              onClick={() => alert("Chapters pop-up will be added here!")}
+            >
+              Listen
+            </button>
+          </div>
+        </div>
+        <div className="description">
+          <h2>Description</h2>
+          <p>{audiobook.description}</p>
+        </div>
       </div>
     </div>
   );
