@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/images/logo.png";
@@ -15,13 +15,29 @@ function AuthenticatedNavbar() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      navigate(`/book-exchange?search=${searchTerm}`); // Updated search to "Book Exchange"
+      navigate(`/book-exchange?search=${searchTerm}`);
     }
   };
 
   const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
+    setDropdownVisible((prev) => !prev);
   };
+
+  const handleClickOutside = (event) => {
+    if (
+      dropdownVisible &&
+      !event.target.closest(".profile-container")
+    ) {
+      setDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [dropdownVisible]);
 
   const handleLogout = () => {
     logout();
@@ -38,8 +54,8 @@ function AuthenticatedNavbar() {
 
       <div className="navbar-links">
         <Link to="/">Home</Link>
-        <Link to="/books">Books</Link> {/* Re-added "Books" */}
-        <Link to="/book-exchange">Book Exchange</Link> {/* Book Exchange */}
+        <Link to="/books">Books</Link>
+        <Link to="/book-exchange">Book Exchange</Link>
         <Link to="/audiobooks">Audio Books</Link>
       </div>
 
@@ -60,15 +76,15 @@ function AuthenticatedNavbar() {
           <FaShoppingCart className="cart-icon" />
         </Link>
 
-        {/* Profile Icon */}
+        {/* Profile Dropdown */}
         <div className="profile-container">
           <FaUser className="user-icon" onClick={toggleDropdown} />
           {dropdownVisible && (
             <div className="profile-dropdown">
               <Link to="/">Home</Link>
               <Link to="/profile">Edit Profile</Link>
-              <Link to="/my-exchange">My Exchange</Link> {/* My Exchange */}
-              <Link to="/upload">Upload</Link> {/* Upload */}
+              <Link to="/my-exchange">My Exchange</Link>
+              <Link to="/upload">Upload</Link>
               <button onClick={handleLogout}>Logout</button>
             </div>
           )}

@@ -13,28 +13,53 @@ function SignUp() {
     confirmPassword: '',
   });
 
-  // Handle form changes
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add a loading state
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
+    // Basic validation for passwords
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
 
-    // Simulate successful registration
-    toast.success('Successfully Registered!');
+    try {
+      setIsSubmitting(true); // Set loading state
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: formData.fullname, // Ensure this matches the backend model
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-    // Redirect to login after 2 seconds
-    setTimeout(() => {
-      navigate('/signin');
-    }, 2000);
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.message || 'Failed to register');
+      }
+
+      // Success notification
+      toast.success('Successfully Registered!');
+
+      // Redirect to login after 2 seconds
+      setTimeout(() => {
+        navigate('/signin');
+      }, 2000);
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      toast.error(error.message || 'Registration failed');
+    } finally {
+      setIsSubmitting(false); // Reset loading state
+    }
   };
 
   return (
@@ -46,7 +71,7 @@ function SignUp() {
           <form onSubmit={handleSubmit}>
             <input 
               type="text" 
-              name="fullname" 
+              fullname="fullname" 
               placeholder="Full name" 
               value={formData.fullname} 
               onChange={handleChange} 
@@ -76,7 +101,9 @@ function SignUp() {
               onChange={handleChange} 
               required 
             />
-            <button type="submit">Sign up</button>
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Signing up...' : 'Sign up'}
+            </button>
           </form>
           <p className="login-link">
             Already have an account? <a href="/signin">Log In</a>
