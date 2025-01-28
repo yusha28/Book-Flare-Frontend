@@ -10,6 +10,7 @@ function AudioBooks() {
     const fetchAudioBooks = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/audiobooks');
+        console.log('Fetched audiobooks:', response.data); // Debug: log the fetched data
         setAudioBooks(response.data);
       } catch (error) {
         console.error('Failed to fetch audiobooks:', error);
@@ -37,14 +38,22 @@ function AudioBooks() {
       <div className="audio-books-grid">
         {audioBooks.map((book, index) => (
           <div key={book._id || index} className="audio-book-card">
+            {/* Debug log for each book */}
+            {console.log('Book details:', book)}
             <img
-              src={`http://localhost:5000${book.image}`}
+              src={book.image.startsWith('http') ? book.image : `http://localhost:5000${book.image}`}
               alt={book.title}
-              onError={(e) => (e.target.src = '/images/placeholder.jpg')}
+              onError={(e) => {
+                console.error(`Image failed to load: ${book.image}`); // Log image errors
+                e.target.src = '/uploads/placeholder.jpg'; // Fallback image
+              }}
             />
             <h3>{book.title}</h3>
             <p className="author">By {book.author || 'Unknown Author'}</p>
-            <p className="price">Price: {book.price ? `$${book.price}` : 'N/A'}</p>
+            
+            {/* ✅ Updated Price Format */}
+            <p className="price">Price: {book.price ? `${book.price} NPR` : 'N/A'}</p>
+
             <button
               onClick={() => (window.location.href = `/audiobooks/${book._id}`)}
               className="view-details"

@@ -3,21 +3,23 @@
 body, html {
   margin: 0;
   padding: 0;
-  background-color: #EDF7F6;  /* Set entire page background */
+  background-color: #EDF7F6; /* Set entire page background */
   font-family: 'Inter', sans-serif;
 }
 
 .book-details-container {
   display: flex;
   justify-content: center;
-  padding: 50px 20px;
+  align-items: center;
+  padding: 30px 20px; /* Reduced padding from 50px to 30px */
   background-color: #EDF7F6;
-  min-height: 100vh;  /* Ensure it covers the full viewport height */
+  min-height: calc(100vh - 60px); /* Adjust height to account for the navbar */
 }
 
 .book-details {
   display: flex;
-  background-color: #EDF7F6;
+  flex-wrap: wrap;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   overflow: hidden;
@@ -27,16 +29,18 @@ body, html {
 }
 
 .book-image-container {
-  background-color: white;
+  background-color: #f3f3f3; /* Light grey background */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px;
-  border-right: 1px solid #e0e0e0;
+  flex: 1;
+  min-width: 300px;
 }
 
 .book-image-container img {
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
   height: auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -47,25 +51,27 @@ body, html {
   flex-direction: column;
   gap: 10px;
   padding: 40px;
+  flex: 2;
+  min-width: 300px;
 }
 
 .book-info h1 {
   font-size: 2rem;
-  font-weight: 700;  /* Inter Bold */
+  font-weight: 700; /* Inter Bold */
   color: #333;
   margin: 0;
 }
 
 .book-info h3 {
   font-size: 1.25rem;
-  font-weight: 600;  /* Inter Semi Bold */
+  font-weight: 600; /* Inter Semi Bold */
   color: #666;
   margin: 5px 0;
 }
 
 .book-info p {
   font-size: 1rem;
-  font-weight: 400;  /* Inter Regular */
+  font-weight: 400; /* Inter Regular */
   line-height: 1.5;
   color: #555;
   margin: 0;
@@ -105,6 +111,10 @@ body, html {
   color: white;
 }
 
+.buy-btn:hover {
+  background-color: #0c5039;
+}
+
 .cart-btn {
   background-color: white;
   color: #0f6247;
@@ -114,7 +124,39 @@ body, html {
   gap: 8px;
 }
 
+.cart-btn:hover {
+  background-color: #0f6247;
+  color: white;
+}
+
 .cart-btn svg {
   width: 18px;
   height: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .book-details {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .book-image-container {
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 20px;
+  }
+
+  .book-info {
+    padding: 20px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .buy-btn, .cart-btn {
+    width: 100%;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
@@ -6,19 +6,17 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Check if the user is already logged in (e.g., token in localStorage)
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
-      // Optionally, fetch user data and set it
     }
   }, []);
 
   const login = (userData, token) => {
-    localStorage.setItem('token', token); // Save token
-    setUser(userData); // Update user state
-    setIsAuthenticated(true); // Update auth state
+    localStorage.setItem('token', token);
+    setUser(userData);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
@@ -34,4 +32,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => React.useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);

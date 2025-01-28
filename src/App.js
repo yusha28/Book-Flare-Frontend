@@ -1,22 +1,35 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar'; // For unauthenticated users
-import AuthenticatedNavbar from './components/AuthenticatedNavbar'; // For authenticated users
+import Navbar from './components/Navbar'; // Navbar for unauthenticated users
+import AuthenticatedNavbar from './components/AuthenticatedNavbar'; // Navbar for authenticated users
 import Home from './pages/Home/Home';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import Books from './pages/Books/Books';
-import BookExchange from './pages/Exchange/BookExchange'; // Book Exchange page
-import MyExchange from './pages/Exchange/MyExchange'; // User's uploaded books
-import UploadBook from './pages/Exchange/UploadBook'; // Upload book for exchange
-import AudioBooks from './pages/AudioBooks/AudioBooks'; // Audio books list
-import AudioBookDetails from './pages/AudioBooks/AudioBookDetails'; // Audio book details
-import CartPage from './pages/Cart/Cart'; // Shopping cart page
-import AdminPanel from './pages/AdminPanel/AdminPanel'; // Admin panel for admins
+import BookDetails from './pages/Books/BookDetails';
+import BookExchange from './pages/Exchange/BookExchange';
+import MyExchange from './pages/Exchange/MyExchange';
+import UploadBook from './pages/Exchange/UploadBook';
+import AudioBooks from './pages/AudioBooks/AudioBooks';
+import AudioBookDetails from './pages/AudioBooks/AudioBookDetails';
+import CartPage from './pages/Cart/Cart';
+import Checkout from './pages/Checkout';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
+import PaymentSuccess from "./pages/PaymentSuccess";  // ✅ Payment Success Page
+import PaymentFailed from "./pages/PaymentFailed";    // ✅ Payment Failed Page
 import { ToastContainer } from 'react-toastify'; // Notifications
-import { AuthProvider, useAuth } from './context/AuthContext'; // Auth context
+import { AuthProvider, useAuth } from './context/AuthContext'; // Authentication context
 import { CartProvider } from './context/CartContext'; // Cart context
 import 'react-toastify/dist/ReactToastify.css'; // Toastify styles
+
+// Fallback Page for Unmatched Routes
+const NotFound = () => (
+  <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <h2>❌ Page Not Found</h2>
+    <p>The page you're looking for does not exist.</p>
+    <a href="/">Go to Home</a>
+  </div>
+);
 
 function MainApp() {
   const { isAuthenticated } = useAuth();
@@ -25,10 +38,10 @@ function MainApp() {
     <div>
       {/* Conditionally render Navbar based on authentication */}
       {isAuthenticated ? <AuthenticatedNavbar /> : <Navbar />}
-      
+
       {/* Toast notifications */}
       <ToastContainer />
-      
+
       {/* Application Routes */}
       <Routes>
         {/* Public Routes */}
@@ -38,11 +51,12 @@ function MainApp() {
 
         {/* Books */}
         <Route path="/books" element={<Books />} />
+        <Route path="/books/:id" element={<BookDetails />} />
 
         {/* Book Exchange */}
-        <Route path="/book-exchange" element={<BookExchange />} /> {/* Displays all available books */}
-        <Route path="/my-exchange" element={<MyExchange />} /> {/* User's uploaded books */}
-        <Route path="/upload" element={<UploadBook />} /> {/* Upload book form */}
+        <Route path="/book-exchange" element={<BookExchange />} />
+        <Route path="/my-exchange" element={<MyExchange />} />
+        <Route path="/upload" element={<UploadBook />} />
 
         {/* AudioBooks */}
         <Route path="/audiobooks" element={<AudioBooks />} />
@@ -50,9 +64,17 @@ function MainApp() {
 
         {/* Cart */}
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+
+        {/* ✅ eSewa Payment Pages */}
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-failed" element={<PaymentFailed />} />
 
         {/* Admin */}
         <Route path="/admin" element={<AdminPanel />} />
+
+        {/* Fallback Route */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import './Books.css';
-import Footer from '../../components/Footer';  
+import Footer from '../../components/Footer';
 
 function Books() {
   const [books, setBooks] = useState([]);
@@ -10,7 +10,7 @@ function Books() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 4;
+  const booksPerPage = 8;
 
   const [genreFilter, setGenreFilter] = useState('');
   const [sortOption, setSortOption] = useState('');
@@ -50,11 +50,12 @@ function Books() {
     setSortOption('');
     setBooks(allBooks);
     setSearchParams({});
+    setCurrentPage(1);
   };
 
   // Filtering Logic
   const filterBooks = (genre, sort) => {
-    let filteredBooks = allBooks;
+    let filteredBooks = [...allBooks];
 
     if (genre) {
       filteredBooks = filteredBooks.filter((book) => book.genre.toLowerCase() === genre.toLowerCase());

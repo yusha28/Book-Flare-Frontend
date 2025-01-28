@@ -3,9 +3,11 @@ import './Login.css';
 import BookImage from '../../assets/images/Book Logo.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../context/AuthContext'; // Import AuthContext
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Use the login function from AuthContext
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -34,7 +36,9 @@ function Login() {
 
       // Save the token and user details in localStorage
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+
+      // Use login from AuthContext to set global authentication state
+      login(user, token);
 
       toast.success('Logged in successfully!');
       navigate('/'); // Redirect to the homepage

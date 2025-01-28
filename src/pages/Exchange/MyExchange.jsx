@@ -1,36 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import './MyExchange.css';
+import EditBookModal from '../../components/EditBookModal';
 
 function MyExchange() {
-  const [books, setBooks] = useState([]);
+  const [myBooks, setMyBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingBook, setEditingBook] = useState(null); // Tracks the book being edited
 
-  const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchMyBooks = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5000/api/exchange/my-books', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-  const fetchBooks = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/exchange/my-books', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        if (!response.ok) {
+          throw new Error('Failed to fetch books');
+        }
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch your books');
+        const data = await response.json();
+        setMyBooks(data);
+      } catch (error) {
+        console.error('Error fetching books:', error.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-      setBooks(data);
-    } catch (error) {
-      console.error('Error fetching your books:', error.message);
-    } finally {
-      setLoading(false);
-    }
+    fetchMyBooks();
+  }, []);
+
+  const handleUpdate = (updatedBook) => {
+    setMyBooks((prevBooks) =>
+      prevBooks.map((book) => (book._id === updatedBook._id ? updatedBook : book))
+    );
   };
 
-  const deleteBook = async (id) => {
+  const handleDelete = async (bookId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/exchange/${id}`, {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:5000/api/exchange/delete/${bookId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -41,40 +53,13 @@ function MyExchange() {
         throw new Error('Failed to delete book');
       }
 
-      alert('Book deleted successfully');
-      fetchBooks(); // Refresh the list
+      setMyBooks((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
+      alert('Book deleted successfully!');
     } catch (error) {
       console.error('Error deleting book:', error.message);
-      alert('Error deleting book');
+      alert('Failed to delete book');
     }
   };
-
-  const editBook = async (id, updatedDetails) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/exchange/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedDetails),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update book');
-      }
-
-      alert('Book updated successfully');
-      fetchBooks(); // Refresh the list
-    } catch (error) {
-      console.error('Error updating book:', error.message);
-      alert('Error updating book');
-    }
-  };
-
-  useEffect(() => {
-    fetchBooks();
-  }, []);
 
   if (loading) {
     return <h2>Loading your books...</h2>;
@@ -82,50 +67,40 @@ function MyExchange() {
 
   return (
     <div className="my-exchange">
-      <h2>My Listings</h2>
+      <h2>My Uploaded Books</h2>
       <div className="book-list">
-        {books.length > 0 ? (
-          books.map((book) => (
+        {myBooks.length > 0 ? (
+          myBooks.map((book) => (
             <div key={book._id} className="book-card">
               <img
-                src={`http://localhost:5000/uploads/${book.image}`}
+                src={book.image.startsWith('http') ? book.image : `http://localhost:5000/uploads/${book.image}`}
                 alt={book.title}
+                onError={(e) => (e.target.src = "/images/placeholder.jpg")} // Fallback image
               />
               <h3>{book.title}</h3>
-              <p>Author: {book.author}</p>
-              <p>Condition: {book.condition}</p>
-              <p>Price: ${book.price}</p>
-              <p>Terms: {book.terms}</p>
-
-              {/* Edit and Delete buttons */}
+              <p><strong>Author:</strong> {book.author}</p>
+              <p><strong>Condition:</strong> {book.condition}</p>
+              <p><strong>Price:</strong> {book.price} NPR</p>
+              <p><strong>Terms:</strong> {book.terms}</p>
               <div className="book-actions">
-                <button
-                  className="edit-button"
-                  onClick={() => {
-                    const updatedDetails = {
-                      title: prompt('Enter new title:', book.title),
-                      price: prompt('Enter new price:', book.price),
-                    };
-                    if (updatedDetails.title && updatedDetails.price) {
-                      editBook(book._id, updatedDetails);
-                    }
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="delete-button"
-                  onClick={() => deleteBook(book._id)}
-                >
-                  Delete
-                </button>
+                <button className="edit-button" onClick={() => setEditingBook(book)}>Edit</button>
+                <button className="delete-button" onClick={() => handleDelete(book._id)}>Delete</button>
               </div>
             </div>
           ))
         ) : (
-          <p>No books listed by you.</p>
+          <p>No books uploaded yet.</p>
         )}
       </div>
+
+      {/* Show Edit Modal */}
+      {editingBook && (
+        <EditBookModal
+          book={editingBook}
+          onClose={() => setEditingBook(null)}
+          onUpdate={handleUpdate}
+        />
+      )}
     </div>
   );
 }

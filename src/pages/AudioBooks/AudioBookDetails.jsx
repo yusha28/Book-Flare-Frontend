@@ -7,6 +7,7 @@ function AudioBookDetails() {
   const { id } = useParams();
   const [audiobook, setAudiobook] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchAudiobook = async () => {
@@ -26,6 +27,14 @@ function AudioBookDetails() {
 
     fetchAudiobook();
   }, [id]);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   if (loading) {
     return <h2>Loading audiobook details...</h2>;
@@ -55,10 +64,7 @@ function AudioBookDetails() {
             <p className="narrator">Narrated by {audiobook.narrator || "N/A"}</p>
             <div className="rating">⭐ {audiobook.rating || "N/A"}</div>
             <p>Chapters: {audiobook.chapters.length}</p>
-            <button
-              className="listen-button"
-              onClick={() => alert("Chapters pop-up will be added here!")}
-            >
+            <button className="listen-button" onClick={handleOpenModal}>
               Listen
             </button>
           </div>
@@ -68,6 +74,29 @@ function AudioBookDetails() {
           <p>{audiobook.description}</p>
         </div>
       </div>
+
+      {/* Modal for Chapters */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Chapters</h2>
+            <button className="close-modal" onClick={handleCloseModal}>
+              &times;
+            </button>
+            <ul>
+              {audiobook.chapters.map((chapter, index) => (
+                <li key={index}>
+                  <strong>{chapter.title}</strong>
+                  <audio controls>
+                    <source src={chapter.audioSrc} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

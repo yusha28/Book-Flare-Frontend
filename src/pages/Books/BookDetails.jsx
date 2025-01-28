@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useCart } from '../../context/CartContext';
 import './BookDetails.css';
 import { FaShoppingCart } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function BookDetails() {
   const { id } = useParams();
@@ -14,7 +16,7 @@ function BookDetails() {
     const fetchBook = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/books/${id}`);
-        setBook(response.data);
+        setBook({ ...response.data, id: response.data.id || generateUniqueId() });
       } catch (error) {
         console.error('Failed to fetch book details:', error);
       }
@@ -22,9 +24,22 @@ function BookDetails() {
     fetchBook();
   }, [id]);
 
+  // Function to Generate a Unique ID if Needed
+  const generateUniqueId = () => Math.random().toString(36).substr(2, 9);
+
   const handleAddToCart = () => {
-    addToCart(book);
-    alert(`${book.title} added to cart!`);
+    if (book) {
+      addToCart(book);
+      toast.success(`${book.title} added to cart!`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   if (!book) {
@@ -40,7 +55,7 @@ function BookDetails() {
         <div className="book-info">
           <h1>{book.title}</h1>
           <h3>{book.author}</h3>
-          <div className="price">{book.price}</div>
+          <div className="price">{book.price} NPR</div>
           <h4>Description</h4>
           <p>{book.summary}</p>
 
@@ -52,6 +67,7 @@ function BookDetails() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
