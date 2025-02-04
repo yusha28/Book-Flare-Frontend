@@ -51,16 +51,7 @@ function Home() {
           <div className="hero-text">
             <h1>Find your next great read at our online book store</h1>
             <p>Explore our curated collection</p>
-            <div className="search-box">
-              <input 
-                type="text" 
-                placeholder="Find your book here..." 
-                aria-label="Search for books"
-              />
-              <button aria-label="Search books">Search Now</button>
-            </div>
           </div>
-
           <div className="hero-image">
             <img 
               src={ReadingImage}  

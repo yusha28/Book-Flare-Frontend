@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
-import KhaltiCheckout from "khalti-checkout-web"; // ✅ Import Khalti SDK
 import "./Checkout.css"; // Import CSS for styling
 
 const Checkout = () => {
@@ -42,30 +41,8 @@ const Checkout = () => {
   const subtotal = calculateSubtotal();
   const total = subtotal + shippingCost;
 
-  // ✅ Khalti Sandbox Payment Configuration
-  const khaltiConfig = {
-    publicKey: "test_public_key_6t6bsmfjpm0j0u9", // ✅ Use Khalti Test Key
-    productIdentity: "123456",
-    productName: "Demo Book Purchase",
-    productUrl: "http://yourwebsite.com",
-    eventHandler: {
-      onSuccess(payload) {
-        console.log("Demo Payment Successful!", payload);
-        alert("Demo Payment Successful! Transaction ID: " + payload.idx);
-      },
-      onError(error) {
-        console.error("Demo Payment Failed!", error);
-        alert("Demo Payment Failed. Please try again.");
-      },
-      onClose() {
-        console.log("Demo Payment Window Closed");
-      },
-    },
-    paymentPreference: ["KHALTI"],
-  };
-
-  // ✅ Function to Trigger Khalti Payment
-  const handleKhaltiPayment = () => {
+  // ✅ Function to Trigger eSewa Payment
+  const handleESewaPayment = async () => {
     // Ensure shipping info is saved before proceeding
     if (
       !shippingInfo.firstName ||
@@ -79,8 +56,28 @@ const Checkout = () => {
       return;
     }
 
-    const checkout = new KhaltiCheckout(khaltiConfig);
-    checkout.show({ amount: total * 100 }); // Khalti uses paisa (100 NPR = 10000 paisa)
+    try {
+      const response = await fetch("http://localhost:5000/api/esewa/initiate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          total_amount: total,
+          transaction_uuid: `TXN${Date.now()}`, // Generate a unique transaction ID
+          product_code: "EPAYTEST", // ✅ eSewa Test Merchant
+        }),
+      });
+
+      const data = await response.json();
+      if (data.payment_url) {
+        window.location.href = data.payment_url; // Redirect to eSewa
+      } else {
+        console.error("Payment initiation failed:", data);
+      }
+    } catch (error) {
+      console.error("Error initiating eSewa payment:", error);
+    }
   };
 
   return (
@@ -175,9 +172,9 @@ const Checkout = () => {
             </p>
           </div>
 
-          {/* ✅ Khalti Payment Button */}
-          <button className="pay-btn" onClick={handleKhaltiPayment}>
-            Pay via Khalti (Demo)
+          {/* ✅ eSewa Payment Button */}
+          <button className="pay-btn" onClick={handleESewaPayment}>
+            Pay via eSewa (Demo)
           </button>
         </div>
       </div>

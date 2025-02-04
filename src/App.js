@@ -15,12 +15,13 @@ import AudioBookDetails from './pages/AudioBooks/AudioBookDetails';
 import CartPage from './pages/Cart/Cart';
 import Checkout from './pages/Checkout';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
-import PaymentSuccess from "./pages/PaymentSuccess";  // ✅ Payment Success Page
-import PaymentFailed from "./pages/PaymentFailed";    // ✅ Payment Failed Page
+import PaymentSuccess from "./pages/PaymentSuccess";  // ✅ eSewa Payment Success Page
+import PaymentFailed from "./pages/PaymentFailed";    // ✅ eSewa Payment Failed Page
 import { ToastContainer } from 'react-toastify'; // Notifications
 import { AuthProvider, useAuth } from './context/AuthContext'; // Authentication context
 import { CartProvider } from './context/CartContext'; // Cart context
-import 'react-toastify/dist/ReactToastify.css'; // Toastify styles
+import 'react-toastify/dist/ReactToastify.css'; 
+import ESewaButton from "./components/ESewaButton"; // ✅ Check if this file exists!
 
 // Fallback Page for Unmatched Routes
 const NotFound = () => (
@@ -66,7 +67,8 @@ function MainApp() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
 
-        {/* ✅ eSewa Payment Pages */}
+        {/* ✅ eSewa Payment Integration */}
+        <Route path="/esewa" element={<ESewaButton amount={1000} transactionId="TXN123456" />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-failed" element={<PaymentFailed />} />
 
